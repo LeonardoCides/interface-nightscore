@@ -1,0 +1,49 @@
+@import url("header.css");
+@import url("hero.css");
+@import url("search.css");
+@import url("bottons.css");
+@import url("cards.css");
+
+.modal-overlay {
+    display: none; /* Esconde por padrão */
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-overlay.active {
+    display: flex; /* Mostra apenas quando tiver a classe active */
+}
+
+/* Estilização dos campos da Modal */
+.modal-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-card input, 
+.modal-card select, 
+.modal-card textarea {
+    background: #18181b; /* Fundo escuro zinc-900 */
+    border: 1px solid #27272a;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    width: 100%;
+}
+
+.modal-card input:focus {
+    border-color: #52525b;
+}
+
+/* Ajuste para o campo de imagem (opcional, se quiser adicionar um link de foto) */
+#imagem_url {
+    margin-bottom: 0.5rem;
+}

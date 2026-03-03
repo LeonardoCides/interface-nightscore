@@ -1,0 +1,115 @@
+/* Importando a fonte Inter (Moderna) e Syne (Mais chamativa/Exótica) */
+/* Importando Syne (Extra Bold) e Clash Display (Bold) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+
+/* Expanda a área útil do site */
+.container, 
+.search-section, 
+.featured-section, 
+header {
+   width: 100%;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.badge {
+    background: rgba(24, 24, 27, 0.5);
+    border: 1px solid #1a1a1a;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    color: #71717a;
+    margin-bottom: 1rem;
+    
+    /* Ajustes para diminuir a largura */
+    display: inline-flex; /* Faz a largura se ajustar ao conteúdo */
+    align-items: center;  /* Alinha ícone e texto verticalmente */
+    gap: 8px;             /* Espaço entre o ícone e o texto */
+    width: fit-content;   /* Garante que não passe do tamanho necessário */
+}
+h1 {
+   font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 5.5rem; /* Grande e imponente */
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    background: linear-gradient(180deg, #FFFFFF 30%, #52525b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+    text-align: center;
+
+    background: linear-gradient(
+        to right, 
+        #ffffff 20%, 
+        #a1a1aa 40%, 
+        #ffffff 60%
+        );
+        background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 8s linear infinite;
+}
+.hero-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: #71717a; /* Cinza sóbrio */
+    letter-spacing: 0.02em;
+    max-width: 500px;
+    margin: 0 auto;
+    opacity: 0.8;
+}
+
+
+.text-gradient {
+   display: inline-block;
+    animation: glitch 1s linear infinite;
+}
+
+.subtitle {
+    font-family: 'Inter', sans-serif;
+    color: #71717a;
+    font-size: 1.1rem;
+    text-align: center; /* Garante o alinhamento central */
+    max-width: 600px; /* Evita que o texto fique muito largo e difícil de ler */
+    margin: 1.5rem auto; /* O 'auto' nas laterais centraliza o bloco na página */
+    line-height: 1.6;
+}
+
+@keyframes shimmer {
+    to { background-position: 200% center; }}
+
+
+h1::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 120px;
+    background: radial-gradient(
+        circle, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        transparent 70%
+    );
+    filter: blur(50px);
+    z-index: -1;
+}
+.header-container {
+    max-width: 1400px; /* Alinha com o resto do site */
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between; /* Empurra o logo para a esquerda e ícones para a direita */
+    align-items: center;
+}
+
+body {
+    background: #000;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(20, 20, 20, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(30, 30, 30, 0.4) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(15, 15, 15, 0.6) 0px, transparent 50%);
+    background-attachment: fixed;
+}
