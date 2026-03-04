@@ -159,3 +159,8 @@
         padding: 0 1rem; /* Reduz o respiro lateral no mobile */
     }
 }
+.search-box, .event-card, .location-banner {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(12px); /* Faz a luz do fundo "embaçar" atrás do card */
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
