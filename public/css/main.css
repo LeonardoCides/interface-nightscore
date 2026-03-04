@@ -3,7 +3,7 @@
 @import url("search.css");
 @import url("bottons.css");
 @import url("cards.css");
-
+@import url("cursor.css");
 .modal-overlay {
     display: none; /* Esconde por padrão */
     position: fixed;
