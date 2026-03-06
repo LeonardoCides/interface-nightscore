@@ -3,258 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nightscore - Assessoria</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Nightscore - Descubra festas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #050505;
+            --card-bg: #111111;
             --primary: #8b5cf6;
-            --primary-glow: rgba(139, 92, 246, 0.7);
+            --primary-glow: rgba(139, 92, 246, 0.4);
+            --text-main: #ffffff;
             --text-muted: #a1a1aa;
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
             background-color: var(--bg-color);
-            color: #fff;
+            color: var(--text-main);
+            margin: 0;
             overflow-x: hidden;
         }
 
-        .hero-viewport {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .main-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .hero-img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-            filter: brightness(0.5) grayscale(0.2);
-        }
+        .logo-container { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; }
+        .logo-icon { color: var(--primary); font-size: 1.5rem; }
 
-        .hero-viewport:hover .hero-img {
-            transform: scale(1.1);
-            filter: brightness(0.7) grayscale(0);
-        }
+        .nav-actions { display: flex; gap: 15px; align-items: center; }
+        .icon-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 
-        .vignette-ultra {
-            position: absolute;
-            inset: 0;
-            z-index: 2;
-            background: 
-                radial-gradient(circle at 30% 50%, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.95) 85%),
-                linear-gradient(to right, rgba(5, 5, 5, 1) 0%, rgba(5, 5, 5, 0.8) 40%, transparent 80%),
-                linear-gradient(to top, var(--bg-color) 0%, transparent 40%);
-            pointer-events: none;
-        }
+        .hero-section { padding: 60px 0; text-align: left; }
+        .badge { background: rgba(139, 92, 246, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+        h1 { font-size: 4rem; margin: 0; line-height: 1.1; letter-spacing: -2px; }
+        .text-gradient { background: linear-gradient(to right, #8b5cf6, #d946ef); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--text-muted); font-size: 1.2rem; max-width: 600px; margin-top: 20px; }
 
-        .main-content {
-            position: relative;
-            z-index: 3;
-            max-width: 1200px;
-            margin-left: 8%;
-            padding: 40px;
-            width: 100%;
-            animation: fadeIn 1.2s ease-out;
-        }
+        .search-box { background: var(--card-bg); border: 1px solid var(--border); padding: 15px 25px; border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .search-box input { background: none; border: none; color: white; width: 100%; outline: none; font-size: 1rem; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
+        .categories-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; }
+        .tag { background: #1a1a1a; border: 1px solid var(--border); color: var(--text-muted); padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; }
+        .tag.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .assessoria-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary);
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 40px; padding-bottom: 100px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: 0.3s; cursor: pointer; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 30px var(--primary-glow); }
+        .card-img { width: 100%; height: 200px; object-fit: cover; }
+        .card-content { padding: 20px; }
+        .card-title { font-size: 1.25rem; font-weight: bold; margin: 0 0 10px 0; }
+        .card-info { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 5px; }
 
-        .event-title {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            margin: 0 0 15px 0;
-            letter-spacing: -3px;
-            line-height: 0.95;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal-card { background: #111; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; border: 1px solid var(--border); }
+        .form-group { margin-bottom: 15px; }
+        input, select, textarea { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid var(--border); border-radius: 8px; color: white; margin-bottom: 10px; box-sizing: border-box; }
 
-        .rating-row {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 30px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px 20px;
-            border-radius: 12px;
-            width: fit-content;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .rating-header {
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .rating-stats {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .score { font-size: 2.2rem; font-weight: 900; color: #fff; }
-
-        .stars-purple { 
-            color: var(--primary); 
-            font-size: 1.2rem; 
-            display: flex; 
-            gap: 5px; 
-            filter: drop-shadow(0 0 8px var(--primary-glow));
-        }
-
-        .description-box {
-            max-width: 500px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #d4d4d8;
-            margin-bottom: 35px;
-            border-left: 2px solid var(--primary);
-            padding-left: 20px;
-        }
-
-        .meta-grid {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .meta-grid i { color: var(--primary); margin-right: 8px; }
-
-        .btn-checkin {
-            background: #fff;
-            color: #000;
-            padding: 18px 45px;
-            border-radius: 4px;
-            font-weight: 900;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .btn-checkin:hover {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 0 30px var(--primary-glow);
-        }
-
-        .back-link {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            z-index: 10;
-            color: #fff;
-            text-decoration: none;
-            opacity: 0.4;
-            transition: 0.3s;
-        }
-
-        .back-link:hover { opacity: 1; }
+        .cursor-glow { position: fixed; width: 400px; height: 400px; background: var(--primary-glow); filter: blur(100px); border-radius: 50%; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); transition: 0.1s; }
     </style>
 </head>
 <body>
-    <div id="event-page"></div>
+    <div class="cursor-glow" id="cursor"></div>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-bolt-lightning"></i></div>
+            <span class="logo-text">Nightscore</span>
+        </div>
+        <div class="nav-actions">
+            <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
+            <button class="btn-add" onclick="toggleModal()"><i class="fa-solid fa-plus"></i> Adicionar Festa</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero-section">
+            <div class="badge">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="event-count">0</span> festas disponíveis
+            </div>
+            <h1>Descubra as <br><span class="text-gradient">melhores festas</span></h1>
+            <p class="subtitle">Explore os melhores rolês, confira o que a galera achou e garanta seu lugar.</p>
+        </section>
+
+        <section class="search-section">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="main-search" placeholder="Buscar festas, locais, cidades...">
+            </div>
+            <div class="categories-scroll">
+                <button class="tag active">Todas</button>
+                <button class="tag">Balada</button>
+                <button class="tag">Festival</button>
+                <button class="tag">Rooftop</button>
+                <button class="tag">Rave</button>
+            </div>
+        </section>
+
+        <section class="featured-section">
+            <h2 class="section-title"><i class="fa-solid fa-arrow-trend-up"></i> FESTAS EM DESTAQUE</h2>
+            <div id="eventos-container" class="cards-grid"></div>
+        </section>
+    </main>
+
+    <div id="modalForm" class="modal-overlay">
+        <div class="modal-card">
+            <h2>Publicar Nova Festa</h2>
+            <form id="formFesta">
+                <input type="url" id="imagem_url" placeholder="Link da Imagem (URL)" required>
+                <input type="text" id="titulo" placeholder="Nome do Evento" required>
+                <input type="date" id="data" required>
+                <input type="text" id="local" placeholder="Localização" required>
+                <select id="categoria">
+                    <option value="Balada">Balada</option>
+                    <option value="Festival">Festival</option>
+                    <option value="Rooftop">Rooftop</option>
+                    <option value="Open Bar">Open Bar</option>
+                </select>
+                <textarea id="descricao" placeholder="Breve descrição" rows="3"></textarea>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-add" style="flex: 1; justify-content: center;">PUBLICAR</button>
+                    <button type="button" onclick="toggleModal()" class="tag">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
-        const mockEvento = {
-            id: 1,
-            titulo: "Techno Revival 2026",
-            imagem_url: "https://images.unsplash.com/photo-1514525253361-bee8718a7439?q=80&w=1974&auto=format&fit=crop",
-            total_votos: 28,
-            soma_notas: 134,
-            descricao: "Uma experiência imersiva no coração da cena underground. Localizado em um armazém industrial com sistema de som de última geração.",
-            data_evento: "15 de Outubro, 2026",
-            localizacao: "São Paulo, SP"
-        };
+        let festas = JSON.parse(localStorage.getItem('nightscore_festas')) || [
+            {
+                id: Date.now(),
+                titulo: "Techno Warehouse",
+                data: "2026-05-12",
+                local: "Antiga Fábrica, SP",
+                categoria: "Balada",
+                imagem_url: "https://images.unsplash.com/photo-1514525253361-bee8718a7439?q=80&w=1000",
+                descricao: "O melhor do techno underground."
+            }
+        ];
 
-        async function load() {
-            const ev = mockEvento;
+        const container = document.getElementById('eventos-container');
+        const eventCount = document.getElementById('event-count');
+        const cursor = document.getElementById('cursor');
 
-            let nota = ev.total_votos > 0 ? (ev.soma_notas / ev.total_votos).toFixed(1) : "4.8";
-            let votos = ev.total_votos > 0 ? ev.total_votos : 20;
+        function render() {
+            container.innerHTML = '';
+            eventCount.innerText = festas.length;
             
-            document.getElementById('event-page').innerHTML = `
-                <div class="hero-viewport">
-                    <a href="#" class="back-link"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
-                    <img src="${ev.imagem_url}" class="hero-img">
-                    <div class="vignette-ultra"></div>
-                    
-                    <div class="main-content">
-                        <div class="assessoria-label">
-                            <i class="fa-solid fa-shield-check"></i> Curadoria Nightscore <i class="fa-solid fa-circle-check" style="font-size: 10px; margin-left: 5px;"></i>
-                        </div>
-                        <h1 class="event-title">${ev.titulo}</h1>
-                        
-                        <div class="rating-row">
-                            <span class="rating-header">Nota da Assessoria</span>
-                            <div class="rating-stats">
-                                <span class="score">${nota}</span>
-                                <div class="stars-purple">
-                                    ${Array(5).fill(0).map((_, i) => `<i class="fa-solid fa-star" style="opacity: ${i < Math.floor(nota) ? 1 : 0.15}"></i>`).join('')}
-                                </div>
-                                <span style="color:var(--text-muted); font-size: 0.7rem; font-weight: 800;">${votos} VERIFICAÇÕES</span>
-                            </div>
-                        </div>
-
-                        <div class="description-box">
-                            ${ev.descricao}
-                        </div>
-
-                        <div class="meta-grid">
-                            <span><i class="fa-solid fa-calendar"></i> ${ev.data_evento}</span>
-                            <span><i class="fa-solid fa-location-arrow"></i> ${ev.localizacao}</span>
-                        </div>
-
-                        <button onclick="avaliar(${ev.id})" class="btn-checkin">
-                            <i class="fa-solid fa-ranking-star"></i> Avaliar Organização
-                        </button>
+            festas.forEach(festa => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${festa.imagem_url}" class="card-img" onerror="this.src='https://via.placeholder.com/300x200?text=Sem+Imagem'">
+                    <div class="card-content">
+                        <div class="card-title">${festa.titulo}</div>
+                        <div class="card-info"><i class="fa-solid fa-calendar"></i> ${festa.data}</div>
+                        <div class="card-info"><i class="fa-solid fa-location-dot"></i> ${festa.local}</div>
+                        <div class="tag" style="margin-top: 10px; display: inline-block; font-size: 0.7rem;">${festa.categoria}</div>
                     </div>
-                </div>
-            `;
+                `;
+                container.appendChild(card);
+            });
         }
 
-        function avaliar(id) {
-            const n = prompt("Como você avalia a organização e assessoria deste evento? (1 a 5)");
-            if (!n || n < 1 || n > 5) return;
-            
-            alert("Obrigado pela sua avaliação de " + n + " estrelas!\n(Como estamos rodando sem servidor, a nota não será salva permanentemente).");
+        function toggleModal() {
+            const modal = document.getElementById('modalForm');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        load();
+        document.getElementById('formFesta').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const novaFesta = {
+                id: Date.now(),
+                titulo: document.getElementById('titulo').value,
+                data: document.getElementById('data').value,
+                local: document.getElementById('local').value,
+                categoria: document.getElementById('categoria').value,
+                imagem_url: document.getElementById('imagem_url').value,
+                descricao: document.getElementById('descricao').value
+            };
+
+            festas.push(novaFesta);
+            localStorage.setItem('nightscore_festas', JSON.stringify(festas));
+            render();
+            toggleModal();
+            e.target.reset();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.getElementById('main-search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                const title = festas[index].titulo.toLowerCase();
+                card.style.display = title.includes(term) ? 'block' : 'none';
+            });
+        });
+
+        render();
     </script>
 </body>
 </html>
