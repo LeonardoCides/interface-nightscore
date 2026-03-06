@@ -1,166 +1,196 @@
-/* Seção de Destaques */
-.featured-section {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
+#eventos-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 30px !important; /* Aumentei um pouco o gap para o brilho não encostar */
+    width: 100% !important;
+    max-width: 1200px !important;
+    justify-items: center !important; /* Centralizado fica mais estético no grid */
+    margin: 40px auto !important;
+    padding: 0 20px !important;
+    box-sizing: border-box !important;
 }
 
-.section-title {
-    font-size: 0.75rem;
-    color: #3f3f46;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-transform: uppercase;
+.event-card-compact {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 350px !important;
+    min-height: 380px !important;
+    margin: 0 !important;
+    text-align: left !important;
+    position: relative !important;
+    cursor: pointer !important;
+    /* Transição suave para o efeito LED e Zoom */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease !important;
 }
-.cards-grid {
-    display: grid;
-    /* Isso cria 3 colunas perfeitas que se ajustam sozinhas */
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 32px; /* Espaço generoso entre os cards */
-    width: 100%;
-    margin-top: 2rem;
-}
 
-
-/* Estilo do Card */
-/* Ajuste do tamanho do card para caberem 3 na tela */
-.event-card {
-    width: 100%; /* O card agora preenche a coluna do grid */
-    min-height: 450px; /* Dá mais corpo ao card */}
-
-.event-card:hover {
-    transform: translateY(-5px);
-    border-color: #333;
+/* Efeito LED Roxo e Zoom ao passar o mouse */
+.event-card-compact:hover {
+    transform: translateY(-10px) scale(1.02) !important;
+    border-color: #a855f7 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
+                0 0 20px rgba(168, 85, 247, 0.3) !important; /* LED Roxo sem exagero */
 }
 
 .card-image {
-    position: relative;
-    height: 280px;
+    width: 100% !important;
+    height: 180px !important;
+    position: relative !important;
+    overflow: hidden !important; /* Essencial para o zoom da imagem não vazar */
 }
 
 .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.6s ease !important;
 }
 
-.card-badge {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    background: #fff;
-    color: #000;
-    padding: 4px 12px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
+/* Efeito Zoom na imagem estilo Netflix */
+.event-card-compact:hover .card-image img {
+    transform: scale(1.1) !important;
 }
 
-.wishlist-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: rgba(0,0,0,0.5);
-    border: none;
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
+/* Brilho extra nos ícones quando o card é focado */
+.event-card-compact:hover .rating-purple i,
+.event-card-compact:hover .meta-item-mini i {
+    filter: drop-shadow(0 0 5px #a855f7) !important;
+    transition: 0.3s;
 }
 
-.wishlist-btn:hover {
-    background: #fff;
-    color: #000;
+.card-badge-mini {
+    position: absolute !important;
+    top: 12px !important;
+    left: 12px !important;
+    background: #a855f7 !important;
+    color: #fff !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    z-index: 5 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
-/* Info do Card */
-.card-info {
-    padding: 1.5rem;
+.card-actions-mini {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 5 !important;
 }
 
-.card-info h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
+.action-btn-mini {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: none !important;
+    color: #fff !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: 0.3s !important;
 }
 
-.card-meta {
-    display: flex;
-    gap: 1rem;
-    color: #71717a;
-    font-size: 0.85rem;
-    margin-bottom: 1.5rem;
+.action-btn-mini:hover {
+    background: #ef4444 !important; /* Vermelho ao excluir */
+    transform: scale(1.1);
 }
 
-.card-meta span {
-    display: flex;
+.card-info-compact {
+    padding: 15px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    flex-grow: 1 !important;
+}
+
+.card-header-mini {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 5px !important;
+}
+
+.card-title-mini {
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+
+.rating-purple {
+    color: #a855f7 !important;
+    font-weight: bold !important;
+    font-size: 0.9rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.card-meta-inline {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+.meta-item-mini {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    color: #a1a1aa !important;
+    font-size: 0.8rem !important;
+}
+
+.meta-item-mini i {
+    color: #a855f7 !important;
+    width: 14px !important;
+}
+
+.card-footer-mini {
+    margin-top: auto !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    display: flex !important;
+    justify-content: space-between !important;
     align-items: center;
-    gap: 0.4rem;
 }
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid #1a1a1a;
+.price-value-mini {
+    color: #fff !important;
+    font-weight: 700 !important;
+    font-size: 0.9rem !important;
 }
 
-.rating {
-    display: flex;
-    align-items: center;
-    gap: 2px;
+.btn-ticket-mini {
+    color: #3b82f6 !important;
+    text-decoration: none !important;
+    font-weight: bold !important;
+    font-size: 0.85rem !important;
+    transition: 0.3s;
 }
 
-.rating i {
-    color: #fff;
-    font-size: 0.7rem;
+.btn-ticket-mini:hover {
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
 }
 
-.reviews {
-    color: #3f3f46;
-    font-size: 0.75rem;
-    margin-left: 0.5rem;
-}
-
-.price {
-    font-weight: 700;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.price::before {
-    content: '\f155'; /* Ícone de real no FontAwesome */
-    font-family: "Font Awesome 6 Free";
-    font-size: 0.7rem;
-    color: #71717a;
-}
-
-/* --- RESPONSIVIDADE (CELULAR) --- */
-@media (max-width: 768px) {
-    .cards-grid {
-        flex-direction: column; /* No celular, eles ficam um embaixo do outro */
-        padding: 0 1rem;
+@media (max-width: 900px) {
+    #eventos-container {
+        grid-template-columns: repeat(2, 1fr) !important;
     }
-
-    .event-card {
-        flex: 1 1 auto; /* O card ocupa a largura total disponível no celular */
-        width: 100%;
-    }
-    
-    .search-section {
-        padding: 0 1rem; /* Reduz o respiro lateral no mobile */
-    }
 }
-.search-box, .event-card, .location-banner {
-    background: rgba(255, 255, 255, 0.03) !important;
-    backdrop-filter: blur(12px); /* Faz a luz do fundo "embaçar" atrás do card */
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+
+@media (max-width: 600px) {
+    #eventos-container {
+        grid-template-columns: 1fr !important;
+    }
 }
