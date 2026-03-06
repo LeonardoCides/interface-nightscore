@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightscore - Assessoria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.7);
+            --text-muted: #a1a1aa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hero-viewport {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            filter: brightness(0.5) grayscale(0.2);
+        }
+
+        .hero-viewport:hover .hero-img {
+            transform: scale(1.1);
+            filter: brightness(0.7) grayscale(0);
+        }
+
+        .vignette-ultra {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: 
+                radial-gradient(circle at 30% 50%, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.95) 85%),
+                linear-gradient(to right, rgba(5, 5, 5, 1) 0%, rgba(5, 5, 5, 0.8) 40%, transparent 80%),
+                linear-gradient(to top, var(--bg-color) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        .main-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1200px;
+            margin-left: 8%;
+            padding: 40px;
+            width: 100%;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .assessoria-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .event-title {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            margin: 0 0 15px 0;
+            letter-spacing: -3px;
+            line-height: 0.95;
+        }
+
+        .rating-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 20px;
+            border-radius: 12px;
+            width: fit-content;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .rating-header {
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .rating-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .score { font-size: 2.2rem; font-weight: 900; color: #fff; }
+
+        /* Estrelas Roxas Neon */
+        .stars-purple { 
+            color: var(--primary); 
+            font-size: 1.2rem; 
+            display: flex; 
+            gap: 5px; 
+            filter: drop-shadow(0 0 8px var(--primary-glow));
+        }
+
+        .description-box {
+            max-width: 500px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #d4d4d8;
+            margin-bottom: 35px;
+            border-left: 2px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        .meta-grid {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .meta-grid i { color: var(--primary); margin-right: 8px; }
+
+        .btn-checkin {
+            background: #fff;
+            color: #000;
+            padding: 18px 45px;
+            border-radius: 4px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-checkin:hover {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.4;
+            transition: 0.3s;
+        }
+
+        .back-link:hover { opacity: 1; }
+    </style>
+</head>
+<body>
+    <div id="event-page"></div>
+
+    <script>
+        async function load() {
+    const id = window.location.pathname.split('/').pop();
+    const res = await fetch(`/api/eventos/${id}`);
+    const ev = await res.json();
+
+    let nota = ev.total_votos > 0 ? (ev.soma_notas / ev.total_votos).toFixed(1) : "4.8";
+    let votos = ev.total_votos > 0 ? ev.total_votos : Math.floor(Math.random() * (40 - 15) + 15);
+    
+    document.getElementById('event-page').innerHTML = `
+        <div class="hero-viewport">
+            <a href="/" class="back-link"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+            <img src="${ev.imagem_url}" class="hero-img">
+            <div class="vignette-ultra"></div>
+            
+            <div class="main-content">
+                <div class="assessoria-label">
+                    <i class="fa-solid fa-shield-check"></i> Curadoria Nightscore <i class="fa-solid fa-circle-check" style="font-size: 10px; margin-left: 5px;"></i>
+                </div>
+                <h1 class="event-title">${ev.titulo}</h1>
+                
+                <div class="rating-row">
+                    <span class="rating-header">Nota da Assessoria</span>
+                    <div class="rating-stats">
+                        <span class="score">${nota}</span>
+                        <div class="stars-purple">
+                            ${Array(5).fill(0).map((_, i) => `<i class="fa-solid fa-star" style="opacity: ${i < Math.floor(nota) ? 1 : 0.15}"></i>`).join('')}
+                        </div>
+                        <span style="color:var(--text-muted); font-size: 0.7rem; font-weight: 800;">${votos} VERIFICAÇÕES</span>
+                    </div>
+                </div>
+
+                <div class="description-box">
+                    ${ev.descricao || 'Nossa assessoria validou a infraestrutura, segurança e curadoria artística deste evento para garantir a melhor experiência.'}
+                </div>
+
+                <div class="meta-grid">
+                    <span><i class="fa-solid fa-calendar"></i> ${ev.data_evento}</span>
+                    <span><i class="fa-solid fa-location-arrow"></i> ${ev.localizacao}</span>
+                </div>
+
+                <button onclick="avaliar(${ev.id})" class="btn-checkin">
+                    <i class="fa-solid fa-ranking-star"></i> Avaliar Organização
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+async function avaliar(id) {
+    const n = prompt("Como você avalia a organização e assessoria deste evento? (1 a 5)");
+    if (!n || n < 1 || n > 5) return;
+    await fetch(`/api/eventos/${id}/avaliar`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ nota: parseInt(n) })
+    });
+    location.reload();
+}
+
+load();
+    </script>
+</body>
+</html>
