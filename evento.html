@@ -120,7 +120,6 @@
 
         .score { font-size: 2.2rem; font-weight: 900; color: #fff; }
 
-        /* Estrelas Roxas Neon */
         .stars-purple { 
             color: var(--primary); 
             font-size: 1.2rem; 
@@ -191,66 +190,69 @@
     <div id="event-page"></div>
 
     <script>
-        async function load() {
-    const id = window.location.pathname.split('/').pop();
-    const res = await fetch(`/api/eventos/${id}`);
-    const ev = await res.json();
+        const ev = {
+            id: 101,
+            titulo: "NIGHT TERRACE",
+            imagem_url: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=2070&auto=format&fit=crop",
+            total_votos: 42,
+            soma_notas: 205,
+            descricao: "Uma noite exclusiva no rooftop mais cobiçado da cidade, com curadoria sonora focada no House Progressivo e visual imersivo.",
+            data_evento: "22 de Março, 2026",
+            localizacao: "São Paulo, SP"
+        };
 
-    let nota = ev.total_votos > 0 ? (ev.soma_notas / ev.total_votos).toFixed(1) : "4.8";
-    let votos = ev.total_votos > 0 ? ev.total_votos : Math.floor(Math.random() * (40 - 15) + 15);
-    
-    document.getElementById('event-page').innerHTML = `
-        <div class="hero-viewport">
-            <a href="/" class="back-link"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
-            <img src="${ev.imagem_url}" class="hero-img">
-            <div class="vignette-ultra"></div>
+        function load() {
+            let nota = ev.total_votos > 0 ? (ev.soma_notas / ev.total_votos).toFixed(1) : "4.8";
+            let votos = ev.total_votos > 0 ? ev.total_votos : Math.floor(Math.random() * (40 - 15) + 15);
             
-            <div class="main-content">
-                <div class="assessoria-label">
-                    <i class="fa-solid fa-shield-check"></i> Curadoria Nightscore <i class="fa-solid fa-circle-check" style="font-size: 10px; margin-left: 5px;"></i>
-                </div>
-                <h1 class="event-title">${ev.titulo}</h1>
-                
-                <div class="rating-row">
-                    <span class="rating-header">Nota da Assessoria</span>
-                    <div class="rating-stats">
-                        <span class="score">${nota}</span>
-                        <div class="stars-purple">
-                            ${Array(5).fill(0).map((_, i) => `<i class="fa-solid fa-star" style="opacity: ${i < Math.floor(nota) ? 1 : 0.15}"></i>`).join('')}
+            document.getElementById('event-page').innerHTML = `
+                <div class="hero-viewport">
+                    <a href="#" class="back-link"><i class="fa-solid fa-chevron-left"></i> Voltar</a>
+                    <img src="${ev.imagem_url}" class="hero-img">
+                    <div class="vignette-ultra"></div>
+                    
+                    <div class="main-content">
+                        <div class="assessoria-label">
+                            <i class="fa-solid fa-shield-check"></i> Curadoria Nightscore <i class="fa-solid fa-circle-check" style="font-size: 10px; margin-left: 5px;"></i>
                         </div>
-                        <span style="color:var(--text-muted); font-size: 0.7rem; font-weight: 800;">${votos} VERIFICAÇÕES</span>
+                        <h1 class="event-title">${ev.titulo}</h1>
+                        
+                        <div class="rating-row">
+                            <span class="rating-header">Nota da Assessoria</span>
+                            <div class="rating-stats">
+                                <span class="score">${nota}</span>
+                                <div class="stars-purple">
+                                    ${Array(5).fill(0).map((_, i) => `<i class="fa-solid fa-star" style="opacity: ${i < Math.floor(nota) ? 1 : 0.15}"></i>`).join('')}
+                                </div>
+                                <span style="color:var(--text-muted); font-size: 0.7rem; font-weight: 800;">${votos} VERIFICAÇÕES</span>
+                            </div>
+                        </div>
+
+                        <div class="description-box">
+                            ${ev.descricao}
+                        </div>
+
+                        <div class="meta-grid">
+                            <span><i class="fa-solid fa-calendar"></i> ${ev.data_evento}</span>
+                            <span><i class="fa-solid fa-location-arrow"></i> ${ev.localizacao}</span>
+                        </div>
+
+                        <button onclick="avaliar(${ev.id})" class="btn-checkin">
+                            <i class="fa-solid fa-ranking-star"></i> Avaliar Organização
+                        </button>
                     </div>
                 </div>
+            `;
+        }
 
-                <div class="description-box">
-                    ${ev.descricao || 'Nossa assessoria validou a infraestrutura, segurança e curadoria artística deste evento para garantir a melhor experiência.'}
-                </div>
+        function avaliar(id) {
+            const n = prompt("Como você avalia a organização e assessoria deste evento? (1 a 5)");
+            if (!n || n < 1 || n > 5) return;
+            
+            alert(`Obrigado! Sua nota ${n} foi registrada localmente.`);
+        }
 
-                <div class="meta-grid">
-                    <span><i class="fa-solid fa-calendar"></i> ${ev.data_evento}</span>
-                    <span><i class="fa-solid fa-location-arrow"></i> ${ev.localizacao}</span>
-                </div>
-
-                <button onclick="avaliar(${ev.id})" class="btn-checkin">
-                    <i class="fa-solid fa-ranking-star"></i> Avaliar Organização
-                </button>
-            </div>
-        </div>
-    `;
-}
-
-async function avaliar(id) {
-    const n = prompt("Como você avalia a organização e assessoria deste evento? (1 a 5)");
-    if (!n || n < 1 || n > 5) return;
-    await fetch(`/api/eventos/${id}/avaliar`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ nota: parseInt(n) })
-    });
-    location.reload();
-}
-
-load();
+        load();
     </script>
 </body>
 </html>
