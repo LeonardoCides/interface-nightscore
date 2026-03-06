@@ -1,4 +1,8 @@
+/* Importando a fonte Inter (Moderna) e Syne (Mais chamativa/Exótica) */
+/* Importando Syne (Extra Bold) e Clash Display (Bold) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+
+/* Expanda a área útil do site */
 .container, 
 .search-section, 
 .featured-section, 
@@ -16,16 +20,16 @@ header {
     color: #71717a;
     margin-bottom: 1rem;
     
-    
-    display: inline-flex;
-    align-items: center;  
-    gap: 8px;             
-    width: fit-content;   
+    /* Ajustes para diminuir a largura */
+    display: inline-flex; /* Faz a largura se ajustar ao conteúdo */
+    align-items: center;  /* Alinha ícone e texto verticalmente */
+    gap: 8px;             /* Espaço entre o ícone e o texto */
+    width: fit-content;   /* Garante que não passe do tamanho necessário */
 }
 h1 {
    font-family: 'Inter', sans-serif;
     font-weight: 900;
-    font-size: 5.5rem; 
+    font-size: 5.5rem; /* Grande e imponente */
     letter-spacing: -0.05em;
     line-height: 0.9;
     background: linear-gradient(180deg, #FFFFFF 30%, #52525b 100%);
@@ -66,9 +70,9 @@ h1 {
     font-family: 'Inter', sans-serif;
     color: #71717a;
     font-size: 1.1rem;
-    text-align: center; 
-    max-width: 600px;
-    margin: 1.5rem auto; 
+    text-align: center; /* Garante o alinhamento central */
+    max-width: 600px; /* Evita que o texto fique muito largo e difícil de ler */
+    margin: 1.5rem auto; /* O 'auto' nas laterais centraliza o bloco na página */
     line-height: 1.6;
 }
 
@@ -122,6 +126,7 @@ body::before, body::after {
     pointer-events: none;
 }
 
+/* Luz 1 - Superior Esquerda (Roxo/Azul) */
 body::before {
     background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
     top: -20%;
@@ -129,7 +134,7 @@ body::before {
     animation: moveAurora 15s ease-in-out infinite alternate;
 }
 
-
+/* Luz 2 - Inferior Direita (Rosa/Magenta Escuro) */
 body::after {
     background: radial-gradient(circle, rgba(192, 38, 211, 0.3) 0%, transparent 70%);
     bottom: -20%;
@@ -137,7 +142,7 @@ body::after {
     animation: moveAurora 20s ease-in-out infinite alternate-reverse;
 }
 
-
+/* Animação que faz o fundo "respirar" e se mover */
 @keyframes moveAurora {
     0% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(10%, 5%) scale(1.1); }
@@ -150,8 +155,9 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-  
+    /* Textura de ruído sutil */
     background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
     opacity: 0.12;
     pointer-events: none;
-    z-index: 1000; 
+    z-index: 1000; /* Fica acima de tudo, unificando o design */
+}
