@@ -11,47 +11,63 @@
 }
 
 .search-box {
-    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     width: 100%;
-    margin-bottom: 8px !important; /* Aproxima as categorias da barra */
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 .search-box i {
-    position: absolute;
-    left: 1.2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #3f3f46;
-    z-index: 10;
+    margin-left: 20px;
+    color: #71717a;
+    font-size: 1.2rem;
 }
 
 .search-box input {
-    display: block;
-    width: 100%;
-    background: #0a0a0a;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 1rem 1.2rem 1rem 3.5rem;
-    border-radius: 12px;
-    color: #fff;
+    flex: 1;
+    background: transparent !important;
+    border: none;
     outline: none;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    
 }
 
+.search-box input::placeholder {
+    color: #52525b;
+    font-size: 1.2rem;
+    font-weight: 400;
+    
+}
+.search-box input:-webkit-autofill,
+.search-box input:-webkit-autofill:hover, 
+.search-box input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    transition: background-color 5000s ease-in-out 0s;
+}
 .search-box input:focus {
-    border-color: #3f3f46;
+    border-color: #71717a;
     background: #0d0d0d;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.02);
 }
 
 .categories-scroll {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 25px;
     overflow-x: auto;
-    padding: 2px 0; /* Remove padding que empurra pra baixo */
-    margin-top: 0 !important;
-    width: 100%;
-    scrollbar-width: none; /* Firefox */
+    padding: 10px 0;
 }
 
 .categories-scroll::-webkit-scrollbar {
