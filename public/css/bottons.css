@@ -62,3 +62,30 @@
 .btn-add:hover::after {
     left: 100%; /* Faz um brilho passar pelo botão ao encostar o mouse */
 }
+
+.delete-btn {
+position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.delete-btn i {
+    font-size: 14px;
+}
+.delete-btn:hover {
+    background: rgba(255, 68, 68, 0.8);
+    border-color: rgba(255, 68, 68, 1);
+    transform: scale(1.05);}
